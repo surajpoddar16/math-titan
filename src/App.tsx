@@ -24,15 +24,29 @@ function App() {
     <div className="app">
       <div className="app-body">
         <div className="app-header">
-          <div className="app-current-target-wrapper">
-            <div
-              className="number-card number-card-lg number-card-bg-primary number-card-shadow app-current-target-required">{currentTarget}</div>
-            <div
-              className="number-card number-card-lg number-card-shadow app-current-target-progress">{currentTargetProgress}</div>
-          </div>
+          {
+            (() => {
+              if (gameState !== GameState.ENDED) {
+                return (
+                  <div className="app-current-target-wrapper">
+                    <div
+                      className="number-card number-card-lg number-card-bg-primary number-card-shadow app-current-target-required">{currentTarget}</div>
+                    <div
+                      className="number-card number-card-lg number-card-shadow app-current-target-progress">{currentTargetProgress}</div>
+                  </div>
+                )
+              } else {
+                return (
+                  <div className="app-game-over">
+                    Game Over
+                  </div>
+                );
+              }
+            })()
+          }
 
           <div className="app-total-score">
-            Score: {totalScore}
+            { gameState === GameState.ENDED ? 'Final ' : '' }Score: {totalScore}
           </div>
 
           <TimerProgress progress={progress}/>

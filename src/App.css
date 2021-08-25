@@ -202,3 +202,8 @@ body {
   background-color: var(--surface-backdrop-alternate);
 }
 
+.app-game-over {
+  font-size: var(--font-size-display);
+  text-align: center;
+  font-weight: 700;
+}
