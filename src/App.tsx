@@ -1,24 +1,50 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { NumbersGrid } from './NumbersGrid';
+import { TimerProgress } from './TimerProgress';
+import { useGameLogic } from './useGameLogic';
+import { GameState } from './interface';
 
 function App() {
+  const gridColumns = 6;
+  const gridRows = 5;
+  const timeoutDuration = 15000;
+
+  const {
+    gameState,
+    currentTarget,
+    currentTargetProgress,
+    totalScore,
+    numbersMatrix,
+    progress,
+    onNumberClick
+  } = useGameLogic(gridColumns, gridRows, timeoutDuration);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <div className="app-body">
+        <div className="app-header">
+          <div className="app-current-target-wrapper">
+            <div
+              className="number-card number-card-lg number-card-bg-primary number-card-shadow app-current-target-required">{currentTarget}</div>
+            <div
+              className="number-card number-card-lg number-card-shadow app-current-target-progress">{currentTargetProgress}</div>
+          </div>
+
+          <div className="app-total-score">
+            Score: {totalScore}
+          </div>
+
+          <TimerProgress progress={progress}/>
+        </div>
+
+        <NumbersGrid
+          disabled={gameState === GameState.ENDED}
+          gridRows={gridRows}
+          gridColumns={gridColumns}
+          numbersMatrix={numbersMatrix}
+          onNumberClick={onNumberClick}/>
+      </div>
     </div>
   );
 }
