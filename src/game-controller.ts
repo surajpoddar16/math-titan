@@ -69,22 +69,19 @@ export class GameController {
 
     if (selectionResult < 0) {
       this.matrixUpdateListener(this);
+      return;
     }
 
     if (selectionResult === 0) {
       this.totalScore += 1;
       this.totalScoreListener(this.totalScore);
       this.matrix.removeCells(this.matrix.getSelectedCellPositions());
-
-      this.getNext();
     }
 
-    if (selectionResult > 0) {
-      if (this.shouldEndGame()) {
-        this.endGame();
-      } else {
-        this.getNext();
-      }
+    if (this.shouldEndGame()) {
+      this.endGame();
+    } else {
+      this.getNext();
     }
   }
 
